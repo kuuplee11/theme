@@ -1,0 +1,941 @@
+{% comment %} AliviaX — Página de Producto {% endcomment %}
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════════════════════════ */
+.aop {
+  --white:    #ffffff;
+  --cream:    #f8f5f1;
+  --deep:     #121220;
+  --navy:     #1e1e30;
+  --rose:     #c25a70;
+  --rose-d:   #a84860;
+  --rose-l:   #f5c6d0;
+  --blush:    #fdeef1;
+  --gold:     #b8925a;
+  --muted:    #7a7a8c;
+  --border:   #e6e0ec;
+  --green:    #2da87a;
+  --r-s:      10px;
+  --r-m:      18px;
+  --r-l:      28px;
+  --sh-s:     0 2px 12px rgba(18,18,32,.07);
+  --sh-m:     0 8px 32px rgba(18,18,32,.10);
+  --sh-l:     0 20px 56px rgba(18,18,32,.13);
+  --t:        .22s ease;
+  color: var(--deep);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+.aop *, .aop *::before, .aop *::after { box-sizing: border-box; }
+.aop a { text-decoration: none; color: inherit; }
+.aop img { display: block; max-width: 100%; }
+.aop p { margin: 0; }
+
+.aop .wrap  { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.aop .wrap-s{ max-width: 860px;  margin: 0 auto; padding: 0 24px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   BREADCRUMB
+═══════════════════════════════════════════════════════════════ */
+.aop__crumb {
+  background: var(--cream); border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+}
+.aop__crumb-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--muted);
+}
+.aop__crumb a { color: var(--muted); transition: color var(--t); }
+.aop__crumb a:hover { color: var(--rose); }
+.aop__crumb .sep { opacity: .5; }
+.aop__crumb .current { color: var(--deep); font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO PRODUCTO — GRID
+═══════════════════════════════════════════════════════════════ */
+.aop__main { background: var(--white); padding: 48px 24px 80px; }
+.aop__grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: start;
+}
+
+/* — Galería — */
+.aop__gallery { position: sticky; top: 100px; }
+.aop__main-img {
+  width: 100%; aspect-ratio: 1; border-radius: var(--r-l); overflow: hidden;
+  background: linear-gradient(145deg, #fce6ec, #f9f0f4, #ede9f5);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--sh-l); position: relative; cursor: zoom-in;
+  margin-bottom: 14px;
+}
+.aop__main-img img {
+  width: 92%; height: 92%; object-fit: contain;
+  transition: transform .35s ease;
+}
+.aop__main-img:hover img { transform: scale(1.05); }
+.aop__main-img .ph {
+  font-size: 80px; line-height: 1;
+  opacity: .4;
+}
+.aop__img-badge {
+  position: absolute; top: 16px; left: 16px; z-index: 2;
+  height: 28px; padding: 0 12px; border-radius: 999px;
+  background: var(--rose); color: #fff; font-size: 12px; font-weight: 800;
+}
+.aop__thumbs {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.aop__thumb {
+  width: 72px; height: 72px; border-radius: var(--r-s); overflow: hidden;
+  border: 2px solid var(--border); cursor: pointer;
+  transition: border-color var(--t), box-shadow var(--t);
+  background: var(--cream); display: flex; align-items: center; justify-content: center;
+}
+.aop__thumb:hover { border-color: var(--rose); }
+.aop__thumb.active { border-color: var(--rose); box-shadow: 0 0 0 3px rgba(194,90,112,.15); }
+.aop__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.aop__thumb .ph-t { font-size: 26px; opacity: .5; }
+
+/* — Info panel — */
+.aop__info { padding-top: 4px; }
+
+.aop__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.aop__badge {
+  height: 24px; padding: 0 10px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em;
+  display: inline-flex; align-items: center;
+}
+.aop__badge.bestseller { background: rgba(194,90,112,.1); color: var(--rose-d); }
+.aop__badge.new        { background: rgba(45,168,122,.1); color: var(--green); }
+.aop__badge.limited    { background: rgba(184,146,90,.1); color: var(--gold); }
+
+.aop__stars {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+}
+.aop__stars .stars { color: #d4a54a; font-size: 18px; letter-spacing: 1px; }
+.aop__stars a { color: var(--muted); font-size: 13px; font-weight: 600; text-decoration: underline; text-decoration-color: rgba(122,122,140,.4); }
+
+.aop__title {
+  font-size: clamp(28px, 3.2vw, 42px); font-weight: 900; letter-spacing: -.05em;
+  line-height: 1.02; margin: 0 0 8px;
+}
+.aop__subtitle {
+  color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 24px;
+}
+
+/* precio */
+.aop__price-row {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.aop__price-cur {
+  font-size: 40px; font-weight: 900; letter-spacing: -.05em; line-height: 1; color: var(--deep);
+}
+.aop__price-old {
+  font-size: 20px; font-weight: 600; color: #bbb; text-decoration: line-through; line-height: 1;
+}
+.aop__price-save {
+  height: 28px; padding: 0 12px; border-radius: 999px;
+  background: var(--rose); color: #fff; font-size: 13px; font-weight: 800;
+  display: inline-flex; align-items: center;
+}
+.aop__price-note { width: 100%; font-size: 12px; color: var(--muted); }
+
+/* beneficios rápidos */
+.aop__quick-benefits {
+  display: grid; gap: 10px; margin-bottom: 28px;
+}
+.aop__qb {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; font-weight: 600; color: var(--deep);
+}
+.aop__qb-icon { font-size: 18px; flex-shrink: 0; line-height: 1; }
+.aop__qb span { color: var(--muted); font-size: 13px; }
+
+/* add to cart */
+.aop__form {}
+.aop__qty-row {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+}
+.aop__qty-label { font-size: 13px; font-weight: 700; color: var(--muted); }
+.aop__qty-ctrl {
+  display: flex; align-items: center;
+  border: 1px solid var(--border); border-radius: 999px; overflow: hidden;
+}
+.aop__qty-btn {
+  width: 38px; height: 38px; background: none; border: none;
+  cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+  color: var(--deep); transition: background var(--t);
+}
+.aop__qty-btn:hover { background: var(--cream); }
+.aop__qty-input {
+  width: 44px; text-align: center; border: none; background: none;
+  font-size: 15px; font-weight: 800; color: var(--deep); outline: none;
+  -moz-appearance: textfield;
+}
+.aop__qty-input::-webkit-outer-spin-button,
+.aop__qty-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+.aop__add-btn {
+  width: 100%; height: 58px; border-radius: 999px;
+  background: var(--rose); color: #fff; border: none; cursor: pointer;
+  font-size: 15px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: 0 10px 30px rgba(194,90,112,.35);
+  transition: all var(--t); animation: aop-breath 2.8s ease-in-out infinite;
+  margin-bottom: 12px;
+}
+.aop__add-btn:hover:not(:disabled) { background: var(--rose-d); transform: translateY(-2px); box-shadow: 0 16px 38px rgba(194,90,112,.45); }
+.aop__add-btn:disabled { background: #ccc; box-shadow: none; animation: none; cursor: not-allowed; }
+.aop__add-btn .btn-icon { font-size: 20px; }
+
+.aop__buy-now {
+  width: 100%; height: 52px; border-radius: 999px;
+  background: var(--deep); color: #fff; border: none; cursor: pointer;
+  font-size: 14px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--sh-m); transition: all var(--t); margin-bottom: 20px;
+  text-decoration: none;
+}
+.aop__buy-now:hover { background: var(--navy); transform: translateY(-1px); }
+
+@keyframes aop-breath {
+  0%,100% { box-shadow: 0 10px 28px rgba(194,90,112,.32); }
+  50%      { box-shadow: 0 16px 40px rgba(194,90,112,.52); }
+}
+
+/* trust mini */
+.aop__trust-mini {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 24px;
+}
+.aop__tmini {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: var(--r-s); padding: 12px 14px; text-align: center;
+}
+.aop__tmini .ti { font-size: 20px; display: block; margin-bottom: 4px; }
+.aop__tmini strong { display: block; font-size: 12px; font-weight: 800; color: var(--deep); }
+.aop__tmini span { font-size: 11px; color: var(--muted); }
+
+/* acordeón detalles */
+.aop__accordion { border-top: 1px solid var(--border); }
+.aop__ac-item { border-bottom: 1px solid var(--border); }
+.aop__ac-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 0; cursor: pointer; user-select: none; gap: 12px;
+}
+.aop__ac-q span { font-size: 14px; font-weight: 700; color: var(--deep); }
+.aop__ac-arrow { color: var(--rose); font-size: 13px; transition: transform var(--t); flex-shrink: 0; }
+.aop__ac-item.open .aop__ac-arrow { transform: rotate(180deg); }
+.aop__ac-body { display: none; padding-bottom: 16px; }
+.aop__ac-item.open .aop__ac-body { display: block; }
+.aop__ac-body p { color: var(--muted); font-size: 14px; line-height: 1.72; }
+.aop__ac-body ul { margin: 0; padding-left: 18px; }
+.aop__ac-body ul li { color: var(--muted); font-size: 14px; line-height: 1.72; margin-bottom: 4px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   BENEFICIOS DETALLADOS
+═══════════════════════════════════════════════════════════════ */
+.aop__benefits { background: var(--cream); padding: 88px 24px; }
+.aop__benefits-head { text-align: center; max-width: 600px; margin: 0 auto 52px; }
+.aop__benefits-head .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--rose); margin-bottom: 14px; }
+.aop__benefits-head .eyebrow::before { content: ""; width: 22px; height: 2px; background: currentColor; }
+.aop__benefits-head h2 { font-size: clamp(28px, 3.5vw, 46px); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; margin: 0; }
+.aop__benefits-head h2 em { font-style: italic; font-weight: 300; color: var(--rose); }
+.aop__benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.aop__benefit-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-l); padding: 36px 30px;
+  transition: box-shadow var(--t), transform var(--t);
+}
+.aop__benefit-card:hover { box-shadow: var(--sh-m); transform: translateY(-3px); }
+.aop__bc-icon {
+  width: 60px; height: 60px; border-radius: var(--r-m);
+  background: var(--blush); display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 20px;
+}
+.aop__bc-num {
+  font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--rose); margin-bottom: 10px;
+}
+.aop__bc-title { font-size: 20px; font-weight: 800; letter-spacing: -.03em; color: var(--deep); margin: 0 0 12px; }
+.aop__bc-text { color: var(--muted); font-size: 15px; line-height: 1.72; }
+
+/* ═══════════════════════════════════════════════════════════════
+   TIMELINE RESULTADOS
+═══════════════════════════════════════════════════════════════ */
+.aop__timeline { background: var(--white); padding: 88px 24px; }
+.aop__timeline-head { text-align: center; max-width: 580px; margin: 0 auto 52px; }
+.aop__timeline-head .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--rose); margin-bottom: 14px; }
+.aop__timeline-head .eyebrow::before { content: ""; width: 22px; height: 2px; background: currentColor; }
+.aop__timeline-head h2 { font-size: clamp(28px, 3.5vw, 46px); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; margin: 0; }
+.aop__timeline-head h2 em { font-style: italic; font-weight: 300; color: var(--rose); }
+
+.aop__weeks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.aop__wcard {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: var(--r-l); padding: 32px 28px; position: relative;
+  overflow: hidden; transition: box-shadow var(--t);
+}
+.aop__wcard:hover { box-shadow: var(--sh-m); }
+.aop__wcard::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+}
+.aop__wcard:nth-child(1)::before { background: var(--rose-l); }
+.aop__wcard:nth-child(2)::before { background: var(--rose); }
+.aop__wcard:nth-child(3)::before { background: var(--deep); }
+.aop__wcard-emoji { font-size: 36px; margin-bottom: 16px; display: block; line-height: 1; }
+.aop__wcard-tag {
+  display: inline-flex; align-items: center;
+  height: 22px; padding: 0 10px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .09em;
+  margin-bottom: 12px;
+}
+.aop__wcard:nth-child(1) .aop__wcard-tag { background: rgba(194,90,112,.1); color: var(--rose-d); }
+.aop__wcard:nth-child(2) .aop__wcard-tag { background: var(--rose); color: #fff; }
+.aop__wcard:nth-child(3) .aop__wcard-tag { background: var(--deep); color: #fff; }
+.aop__wcard h3 { font-size: 20px; font-weight: 800; letter-spacing: -.03em; color: var(--deep); margin: 0 0 10px; }
+.aop__wcard p  { color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+/* ═══════════════════════════════════════════════════════════════
+   CÓMO USAR
+═══════════════════════════════════════════════════════════════ */
+.aop__how { background: var(--deep); padding: 88px 24px; position: relative; overflow: hidden; }
+.aop__how::before {
+  content: ""; pointer-events: none;
+  position: absolute; top: -80px; right: -80px;
+  width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(194,90,112,.15), transparent 65%);
+}
+.aop__how-head { text-align: center; max-width: 560px; margin: 0 auto 52px; position: relative; z-index: 1; }
+.aop__how-head .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--rose-l); margin-bottom: 14px; }
+.aop__how-head .eyebrow::before { content: ""; width: 22px; height: 2px; background: currentColor; }
+.aop__how-head h2 { font-size: clamp(28px, 3.5vw, 46px); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; color: #fff; margin: 0; }
+.aop__how-head h2 em { font-style: italic; font-weight: 300; color: var(--rose-l); }
+.aop__steps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; position: relative; z-index: 1; }
+.aop__step {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+  border-radius: var(--r-m); padding: 26px 16px; text-align: center; transition: background var(--t);
+}
+.aop__step:hover { background: rgba(255,255,255,.09); }
+.aop__step-ico {
+  width: 54px; height: 54px; border-radius: 50%;
+  background: rgba(194,90,112,.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin: 0 auto 14px;
+}
+.aop__step-n { color: var(--rose-l); font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 8px; }
+.aop__step h4 { color: #fff; font-size: 14px; font-weight: 800; margin: 0 0 8px; }
+.aop__step p  { color: rgba(255,255,255,.6); font-size: 12px; line-height: 1.6; }
+
+/* ═══════════════════════════════════════════════════════════════
+   REVIEWS
+═══════════════════════════════════════════════════════════════ */
+.aop__reviews { background: var(--cream); padding: 88px 24px; }
+.aop__reviews-head { text-align: center; max-width: 600px; margin: 0 auto 14px; }
+.aop__reviews-head .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--rose); margin-bottom: 14px; }
+.aop__reviews-head .eyebrow::before { content: ""; width: 22px; height: 2px; background: currentColor; }
+.aop__reviews-head h2 { font-size: clamp(28px, 3.5vw, 46px); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; margin: 0; }
+.aop__reviews-head h2 em { font-style: italic; font-weight: 300; color: var(--rose); }
+.aop__reviews-summary {
+  display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 48px;
+}
+.aop__reviews-summary .big-stars { color: #d4a54a; font-size: 24px; letter-spacing: 2px; }
+.aop__reviews-summary .big-rating { font-size: 40px; font-weight: 900; letter-spacing: -.05em; line-height: 1; }
+.aop__reviews-summary .rcount { color: var(--muted); font-size: 14px; font-weight: 600; }
+.aop__reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+.aop__rcard {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-m); padding: 28px 26px;
+  transition: box-shadow var(--t), transform var(--t);
+}
+.aop__rcard:hover { box-shadow: var(--sh-m); transform: translateY(-2px); }
+.aop__rcard.featured { border-color: var(--rose-l); background: var(--blush); }
+.aop__rcard .verified {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 22px; padding: 0 10px; border-radius: 999px;
+  background: rgba(45,168,122,.1); color: var(--green);
+  font-size: 11px; font-weight: 700; margin-bottom: 12px;
+}
+.aop__rcard .rstars { color: #d4a54a; font-size: 14px; margin-bottom: 8px; }
+.aop__rcard .rweek {
+  display: inline-flex; height: 22px; padding: 0 10px; border-radius: 8px;
+  background: var(--cream); border: 1px solid var(--border);
+  font-size: 11px; font-weight: 700; color: var(--muted); margin-bottom: 12px;
+  align-items: center; gap: 4px;
+}
+.aop__rcard blockquote { margin: 0 0 18px; font-size: 14px; line-height: 1.7; color: var(--deep); font-style: italic; }
+.aop__rcard-author { display: flex; align-items: center; gap: 10px; }
+.aop__rcard .avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose-l), var(--rose));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 900; color: #fff; flex-shrink: 0;
+}
+.aop__rcard .rname { font-size: 13px; font-weight: 800; color: var(--deep); }
+.aop__rcard .rmeta { font-size: 12px; color: var(--muted); }
+
+/* ═══════════════════════════════════════════════════════════════
+   FAQ MINI
+═══════════════════════════════════════════════════════════════ */
+.aop__faq { background: var(--white); padding: 88px 24px; }
+.aop__faq-head { text-align: center; max-width: 560px; margin: 0 auto 44px; }
+.aop__faq-head .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--rose); margin-bottom: 14px; }
+.aop__faq-head .eyebrow::before { content: ""; width: 22px; height: 2px; background: currentColor; }
+.aop__faq-head h2 { font-size: clamp(26px, 3vw, 40px); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; margin: 0; }
+.aop__faq-list { display: grid; gap: 8px; }
+.aop__faq-item {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: var(--r-m); overflow: hidden; transition: border-color var(--t);
+}
+.aop__faq-item.open { border-color: var(--rose-l); }
+.aop__faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 22px; cursor: pointer; user-select: none; gap: 12px;
+}
+.aop__faq-q h3 { margin: 0; font-size: 15px; font-weight: 700; color: var(--deep); line-height: 1.4; }
+.aop__faq-arr {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: var(--white); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--rose); font-size: 12px; transition: transform var(--t);
+}
+.aop__faq-item.open .aop__faq-arr { transform: rotate(180deg); }
+.aop__faq-a { display: none; padding: 0 22px 18px; }
+.aop__faq-item.open .aop__faq-a { display: block; }
+.aop__faq-a p { color: var(--muted); font-size: 14px; line-height: 1.72; }
+
+/* ═══════════════════════════════════════════════════════════════
+   CTA INFERIOR
+═══════════════════════════════════════════════════════════════ */
+.aop__cta-bottom { background: var(--deep); padding: 80px 24px; text-align: center; position: relative; overflow: hidden; }
+.aop__cta-bottom::before {
+  content: ""; pointer-events: none;
+  position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(194,90,112,.2), transparent 65%);
+}
+.aop__cta-bottom .wrap { position: relative; z-index: 1; }
+.aop__cta-bottom h2 { color: #fff; font-size: clamp(28px,4vw,50px); font-weight: 900; letter-spacing: -.05em; line-height: 1.04; margin: 0 0 14px; }
+.aop__cta-bottom h2 em { font-style: italic; font-weight: 300; color: var(--rose-l); }
+.aop__cta-bottom p { color: rgba(255,255,255,.68); font-size: 16px; line-height: 1.6; margin-bottom: 30px; }
+.aop__cta-bottom-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px; }
+.aop__cta-bottom .btn-rose {
+  height: 58px; padding: 0 36px; border-radius: 999px;
+  background: var(--rose); color: #fff; border: none; cursor: pointer;
+  font-size: 15px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  box-shadow: 0 10px 30px rgba(194,90,112,.35);
+  transition: all var(--t); text-decoration: none; display: inline-flex; align-items: center;
+  animation: aop-breath 2.8s ease-in-out infinite;
+}
+.aop__cta-bottom .btn-rose:hover { background: var(--rose-d); transform: translateY(-2px); }
+.aop__cta-bottom .trust-row {
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 22px;
+}
+.aop__cta-bottom .trust-row span { color: rgba(255,255,255,.65); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 990px) {
+  .aop__grid        { grid-template-columns: 1fr; gap: 40px; }
+  .aop__gallery     { position: static; }
+  .aop__benefits-grid { grid-template-columns: 1fr 1fr; }
+  .aop__weeks       { grid-template-columns: 1fr; }
+  .aop__steps-grid  { grid-template-columns: repeat(3, 1fr); }
+  .aop__reviews-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .aop__main        { padding: 32px 16px 60px; }
+  .aop__title       { font-size: 28px; }
+  .aop__trust-mini  { grid-template-columns: 1fr 1fr; }
+  .aop__benefits-grid  { grid-template-columns: 1fr; }
+  .aop__weeks       { grid-template-columns: 1fr; }
+  .aop__steps-grid  { grid-template-columns: 1fr 1fr; }
+  .aop__reviews-grid { grid-template-columns: 1fr; }
+  .aop__benefits,
+  .aop__timeline,
+  .aop__how,
+  .aop__reviews,
+  .aop__faq,
+  .aop__cta-bottom  { padding-top: 64px; padding-bottom: 64px; }
+}
+</style>
+
+<div class="aop">
+
+  <!-- BREADCRUMB -->
+  <nav class="aop__crumb" aria-label="Ruta de navegación">
+    <div class="aop__crumb-inner">
+      <a href="/">Inicio</a>
+      <span class="sep">/</span>
+      <a href="/collections/all">Productos</a>
+      <span class="sep">/</span>
+      <span class="current">{{ product.title | default: 'Gafas AliviaX Anti-Ojeras' }}</span>
+    </div>
+  </nav>
+
+  <!-- HERO: GALERÍA + INFO -->
+  <div class="aop__main">
+    <div class="aop__grid">
+
+      <!-- Galería -->
+      <div class="aop__gallery">
+        <div class="aop__main-img" id="aop-main-img">
+          <span class="aop__img-badge">{{ section.settings.badge_text | default: '-37%' }}</span>
+          {%- if product.featured_image != blank -%}
+            <img id="aop-img-display"
+              src="{{ product.featured_image | image_url: width: 800 }}"
+              alt="{{ product.featured_image.alt | default: product.title }}"
+              loading="eager" fetchpriority="high">
+          {%- elsif section.settings.product_image != blank -%}
+            <img id="aop-img-display"
+              src="{{ section.settings.product_image | image_url: width: 800 }}"
+              alt="Gafas AliviaX Anti-Ojeras"
+              loading="eager" fetchpriority="high">
+          {%- else -%}
+            <div class="ph">👓</div>
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="aop__thumbs">
+            {%- for image in product.images limit: 6 -%}
+              <div class="aop__thumb{% if forloop.first %} active{% endif %}"
+                data-src="{{ image | image_url: width: 800 }}"
+                data-alt="{{ image.alt | default: product.title }}">
+                <img src="{{ image | image_url: width: 150 }}" alt="{{ image.alt | default: product.title }}" loading="lazy">
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- elsif section.settings.product_image != blank -%}
+          <div class="aop__thumbs">
+            <div class="aop__thumb active">
+              <img src="{{ section.settings.product_image | image_url: width: 150 }}" alt="Gafas AliviaX" loading="lazy">
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Info -->
+      <div class="aop__info">
+        <div class="aop__badges">
+          <span class="aop__badge bestseller">⭐ Más vendido</span>
+          <span class="aop__badge limited">🔥 Stock limitado</span>
+        </div>
+
+        <div class="aop__stars">
+          <span class="stars">★★★★★</span>
+          <a href="#aop-reviews">4.9/5 · 1.200+ opiniones</a>
+        </div>
+
+        <h1 class="aop__title">{{ product.title | default: 'Gafas AliviaX Anti-Ojeras' }}</h1>
+        <p class="aop__subtitle">Tecnología dual Luz Roja LED 630–660 nm + Microcorriente EMS</p>
+
+        <!-- Precio -->
+        <div class="aop__price-row">
+          {%- assign current_variant = product.selected_or_first_available_variant -%}
+          {%- if current_variant != blank -%}
+            {%- if current_variant.compare_at_price > current_variant.price -%}
+              <span class="aop__price-old">{{ current_variant.compare_at_price | money }}</span>
+            {%- elsif section.settings.old_price != blank -%}
+              <span class="aop__price-old">{{ section.settings.old_price }}</span>
+            {%- endif -%}
+            <span class="aop__price-cur">{{ current_variant.price | money }}</span>
+            {%- if current_variant.compare_at_price > current_variant.price -%}
+              {%- assign saved = current_variant.compare_at_price | minus: current_variant.price -%}
+              <span class="aop__price-save">Ahorras {{ saved | money }}</span>
+            {%- else -%}
+              <span class="aop__price-save">{{ section.settings.badge_text | default: '-37%' }}</span>
+            {%- endif -%}
+          {%- else -%}
+            {%- if section.settings.old_price != blank -%}
+              <span class="aop__price-old">{{ section.settings.old_price }}</span>
+            {%- endif -%}
+            <span class="aop__price-cur">{{ section.settings.price | default: '49,99€' }}</span>
+            <span class="aop__price-save">{{ section.settings.badge_text | default: '-37%' }}</span>
+          {%- endif -%}
+          <span class="aop__price-note">IVA incluido · Envío gratuito a España peninsular</span>
+        </div>
+
+        <!-- Beneficios rápidos -->
+        <div class="aop__quick-benefits">
+          <div class="aop__qb"><span class="aop__qb-icon">🔴</span>Luz Roja LED 630–660 nm <span>Estimula colágeno y circulación</span></div>
+          <div class="aop__qb"><span class="aop__qb-icon">⚡</span>Microcorriente EMS <span>Drenaje linfático y tonificación</span></div>
+          <div class="aop__qb"><span class="aop__qb-icon">⏱️</span>Solo 10 min/día <span>Apagado automático incluido</span></div>
+          <div class="aop__qb"><span class="aop__qb-icon">🏠</span>Uso doméstico <span>Sin supervisión profesional</span></div>
+          <div class="aop__qb"><span class="aop__qb-icon">🌸</span>Resultados en 1–2 semanas <span>Con uso de 3–5 sesiones semanales</span></div>
+        </div>
+
+        <!-- Formulario -->
+        <div class="aop__form">
+          {%- if product != blank and current_variant != blank -%}
+            <form method="post" action="/cart/add" id="aop-product-form">
+              <input type="hidden" name="id" value="{{ current_variant.id }}" id="aop-variant-id">
+              <div class="aop__qty-row">
+                <span class="aop__qty-label">Cantidad:</span>
+                <div class="aop__qty-ctrl">
+                  <button type="button" class="aop__qty-btn" id="aop-qty-minus" aria-label="Reducir">−</button>
+                  <input type="number" name="quantity" value="1" min="1" max="10" class="aop__qty-input" id="aop-qty" aria-label="Cantidad">
+                  <button type="button" class="aop__qty-btn" id="aop-qty-plus" aria-label="Aumentar">+</button>
+                </div>
+              </div>
+              <button type="submit" class="aop__add-btn"
+                {% unless current_variant.available %}disabled{% endunless %}>
+                <span class="btn-icon">🛒</span>
+                {%- if current_variant.available -%}
+                  AÑADIR AL CARRITO
+                {%- else -%}
+                  AGOTADO
+                {%- endif -%}
+              </button>
+            </form>
+            <a href="/checkout?variant={{ current_variant.id }}&quantity=1" class="aop__buy-now">
+              COMPRAR AHORA →
+            </a>
+          {%- else -%}
+            <div class="aop__qty-row">
+              <span class="aop__qty-label">Cantidad:</span>
+              <div class="aop__qty-ctrl">
+                <button type="button" class="aop__qty-btn" id="aop-qty-minus" aria-label="Reducir">−</button>
+                <input type="number" value="1" min="1" max="10" class="aop__qty-input" id="aop-qty" aria-label="Cantidad">
+                <button type="button" class="aop__qty-btn" id="aop-qty-plus" aria-label="Aumentar">+</button>
+              </div>
+            </div>
+            <a href="{{ section.settings.product_url | default: '/products/gafas-antiojeras-aliviax' }}" class="aop__add-btn" style="display:flex;">
+              <span class="btn-icon">🛒</span> VER PRODUCTO
+            </a>
+          {%- endif -%}
+        </div>
+
+        <!-- Trust mini -->
+        <div class="aop__trust-mini">
+          <div class="aop__tmini"><span class="ti">🛡️</span><strong>30 días</strong><span>Sin riesgo</span></div>
+          <div class="aop__tmini"><span class="ti">🚚</span><strong>Gratis</strong><span>Envío España</span></div>
+          <div class="aop__tmini"><span class="ti">🏆</span><strong>1 año</strong><span>Garantía</span></div>
+        </div>
+
+        <!-- Acordeón detalles -->
+        <div class="aop__accordion">
+          <div class="aop__ac-item open">
+            <div class="aop__ac-q"><span>📦 Qué incluye en la caja</span><span class="aop__ac-arrow">▼</span></div>
+            <div class="aop__ac-body">
+              <ul>
+                <li>Gafas AliviaX Anti-Ojeras (1 unidad)</li>
+                <li>Cable de carga USB-C</li>
+                <li>Manual de instrucciones en español</li>
+                <li>Estuche protector</li>
+              </ul>
+            </div>
+          </div>
+          <div class="aop__ac-item">
+            <div class="aop__ac-q"><span>🔧 Especificaciones técnicas</span><span class="aop__ac-arrow">▼</span></div>
+            <div class="aop__ac-body">
+              <ul>
+                <li>Tecnología: Luz Roja LED (630–660 nm) + Microcorriente EMS</li>
+                <li>Material: ABS de grado médico</li>
+                <li>Duración de sesión: 10 minutos (apagado automático)</li>
+                <li>Carga: USB-C incluido · ~2 horas de carga completa</li>
+                <li>Autonomía: 7–10 sesiones por carga</li>
+                <li>Peso: ~400g · Apta para todo tipo de piel</li>
+              </ul>
+            </div>
+          </div>
+          <div class="aop__ac-item">
+            <div class="aop__ac-q"><span>🚚 Envío y devoluciones</span><span class="aop__ac-arrow">▼</span></div>
+            <div class="aop__ac-body">
+              <p>Enviamos a España peninsular, Baleares y Canarias. Tiempo de entrega: 3–5 días hábiles. Envío gratuito en todos los pedidos. Política de devolución de 30 días sin preguntas.</p>
+            </div>
+          </div>
+          <div class="aop__ac-item">
+            <div class="aop__ac-q"><span>🛡️ Garantía</span><span class="aop__ac-arrow">▼</span></div>
+            <div class="aop__ac-body">
+              <p>Garantía del fabricante de 12 meses. En caso de defecto, nos encargamos del cambio o reparación sin coste adicional.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BENEFICIOS DETALLADOS -->
+  <section class="aop__benefits">
+    <div class="wrap">
+      <div class="aop__benefits-head">
+        <span class="eyebrow">Por qué funciona</span>
+        <h2>Dos tecnologías. <em>Un resultado.</em></h2>
+      </div>
+      <div class="aop__benefits-grid">
+        <div class="aop__benefit-card">
+          <div class="aop__bc-icon">🔴</div>
+          <div class="aop__bc-num">01 — Luz Roja LED</div>
+          <h3 class="aop__bc-title">630–660 nm de eficacia clínica</h3>
+          <p class="aop__bc-text">La longitud de onda de 630–660 nm penetra la dermis para estimular la producción natural de colágeno y reactivar la microcirculación. La misma tecnología usada en cabinas de estética profesional, ahora en casa.</p>
+        </div>
+        <div class="aop__benefit-card">
+          <div class="aop__bc-icon">⚡</div>
+          <div class="aop__bc-num">02 — Microcorriente EMS</div>
+          <h3 class="aop__bc-title">Tonificación profunda sin dolor</h3>
+          <p class="aop__bc-text">Impulsos de baja frecuencia que tonifican el músculo orbicular, favorecen el drenaje linfático y reducen la retención de líquidos causante de las bolsas. Imperceptible pero profundamente efectiva.</p>
+        </div>
+        <div class="aop__benefit-card">
+          <div class="aop__bc-icon">🏠</div>
+          <div class="aop__bc-num">03 — Sin clínicas</div>
+          <h3 class="aop__bc-title">Tecnología profesional en casa</h3>
+          <p class="aop__bc-text">Sin agujas, sin citas ni desplazamientos. 10 minutos al día con apagado automático — puedes usarlas mientras lees, ves la televisión o simplemente descansas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE RESULTADOS -->
+  <section class="aop__timeline">
+    <div class="wrap">
+      <div class="aop__timeline-head">
+        <span class="eyebrow">Resultados progresivos</span>
+        <h2>Lo que notas <em>semana a semana.</em></h2>
+      </div>
+      <div class="aop__weeks">
+        <div class="aop__wcard">
+          <span class="aop__wcard-emoji">🌸</span>
+          <span class="aop__wcard-tag">Semana 1–2</span>
+          <h3>Más firme y descansada</h3>
+          <p>La piel del contorno de ojos se siente más hidratada y tonificada. La sensación de pesadez disminuye visiblemente.</p>
+        </div>
+        <div class="aop__wcard">
+          <span class="aop__wcard-emoji">✨</span>
+          <span class="aop__wcard-tag">Semana 3–4</span>
+          <h3>Ojeras claras, bolsas reducidas</h3>
+          <p>El tono oscuro se aclara y las bolsas se reducen de forma notoria. Tu mirada recupera luminosidad natural.</p>
+        </div>
+        <div class="aop__wcard">
+          <span class="aop__wcard-emoji">🪄</span>
+          <span class="aop__wcard-tag">Semana 5–8</span>
+          <h3>Firmeza, luz y contorno definido</h3>
+          <p>Mejora notoria en luminosidad, firmeza y líneas de expresión. Un cambio que tú notas — y los demás también.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO USAR -->
+  <section class="aop__how">
+    <div class="wrap">
+      <div class="aop__how-head">
+        <span class="eyebrow">Instrucciones</span>
+        <h2>Cómo usarlas. <em>Fácil.</em></h2>
+      </div>
+      <div class="aop__steps-grid">
+        <div class="aop__step">
+          <div class="aop__step-ico">🧼</div>
+          <div class="aop__step-n">Paso 1</div>
+          <h4>Limpia y prepara</h4>
+          <p>Limpia el contorno de ojos y aplica sérum o crema hidratante.</p>
+        </div>
+        <div class="aop__step">
+          <div class="aop__step-ico">👓</div>
+          <div class="aop__step-n">Paso 2</div>
+          <h4>Coloca las gafas</h4>
+          <p>Ajusta con contacto firme en la piel. Sin lentillas.</p>
+        </div>
+        <div class="aop__step">
+          <div class="aop__step-ico">⚡</div>
+          <div class="aop__step-n">Paso 3</div>
+          <h4>Enciéndelas</h4>
+          <p>Mantén el botón 3 segundos hasta que se active.</p>
+        </div>
+        <div class="aop__step">
+          <div class="aop__step-ico">🧘</div>
+          <div class="aop__step-n">Paso 4</div>
+          <h4>Relájate 10 min</h4>
+          <p>Se detiene automáticamente al terminar.</p>
+        </div>
+        <div class="aop__step">
+          <div class="aop__step-ico">📅</div>
+          <div class="aop__step-n">Paso 5</div>
+          <h4>Repite 3–5x/sem</h4>
+          <p>La constancia es la clave del resultado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="aop__reviews" id="aop-reviews">
+    <div class="wrap">
+      <div class="aop__reviews-head">
+        <span class="eyebrow">Opiniones verificadas</span>
+        <h2>Lo que dicen <em>nuestras clientas.</em></h2>
+      </div>
+      <div class="aop__reviews-summary">
+        <span class="big-stars">★★★★★</span>
+        <span class="big-rating">4.9</span>
+        <span class="rcount">sobre 5 · 1.200+ valoraciones</span>
+      </div>
+      <div class="aop__reviews-grid">
+        <div class="aop__rcard featured">
+          <span class="verified">✔ Compra verificada</span>
+          <div class="rstars">★★★★★</div>
+          <span class="rweek">📅 Semana 4</span>
+          <blockquote>"Llevaba años con ojeras horribles. A las 4 semanas mi pareja me preguntó si había dormido mejor. No era el sueño — eran las gafas. Impresionante."</blockquote>
+          <div class="aop__rcard-author">
+            <div class="avatar">L</div>
+            <div><div class="rname">Laura M.</div><div class="rmeta">Madrid · 38 años</div></div>
+          </div>
+        </div>
+        <div class="aop__rcard">
+          <span class="verified">✔ Compra verificada</span>
+          <div class="rstars">★★★★★</div>
+          <span class="rweek">📅 Semana 6</span>
+          <blockquote>"Era muy escéptica. Las usé 4 veces por semana y funcionan de verdad. Las bolsas han bajado muchísimo. Ya las he recomendado a tres amigas."</blockquote>
+          <div class="aop__rcard-author">
+            <div class="avatar">S</div>
+            <div><div class="rname">Sofía R.</div><div class="rmeta">Barcelona · 44 años</div></div>
+          </div>
+        </div>
+        <div class="aop__rcard">
+          <span class="verified">✔ Compra verificada</span>
+          <div class="rstars">★★★★★</div>
+          <span class="rweek">📅 Semana 3</span>
+          <blockquote>"Las uso por la noche mientras leo. En 10 minutos terminan solas. A las 3 semanas mis compañeras me preguntan qué me hago. ¡100% recomendadas!"</blockquote>
+          <div class="aop__rcard-author">
+            <div class="avatar">C</div>
+            <div><div class="rname">Carmen G.</div><div class="rmeta">Valencia · 51 años</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ MINI -->
+  <section class="aop__faq">
+    <div class="wrap-s">
+      <div class="aop__faq-head">
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2>Resolvemos tus dudas.</h2>
+      </div>
+      <div class="aop__faq-list">
+        <div class="aop__faq-item open">
+          <div class="aop__faq-q"><h3>¿Cuándo veré resultados?</h3><span class="aop__faq-arr">▼</span></div>
+          <div class="aop__faq-a"><p>La mayoría de usuarias notan la piel más firme y descansada en las primeras 2 semanas. Los cambios visibles en ojeras y bolsas aparecen a partir de la semana 3–4 con 3–5 sesiones semanales.</p></div>
+        </div>
+        <div class="aop__faq-item">
+          <div class="aop__faq-q"><h3>¿Es seguro para los ojos?</h3><span class="aop__faq-arr">▼</span></div>
+          <div class="aop__faq-a"><p>Sí, completamente. La luz roja LED de 630–660 nm es no ionizante y está diseñada para la delicada zona periocular. No emite calor ni radiación dañina.</p></div>
+        </div>
+        <div class="aop__faq-item">
+          <div class="aop__faq-q"><h3>¿Funciona si no siento la microcorriente?</h3><span class="aop__faq-arr">▼</span></div>
+          <div class="aop__faq-a"><p>Sí. La microcorriente EMS es imperceptible en muchas personas — trabaja a nivel muscular profundo. Aplica sérum antes de cada sesión para mejorar la conductividad.</p></div>
+        </div>
+        <div class="aop__faq-item">
+          <div class="aop__faq-q"><h3>¿Cuántas veces a la semana debo usarlas?</h3><span class="aop__faq-arr">▼</span></div>
+          <div class="aop__faq-a"><p>Recomendamos 3–5 sesiones semanales de 10 minutos. Puedes usarlas diariamente — no hay riesgo de sobreuso. La constancia es la clave.</p></div>
+        </div>
+        <div class="aop__faq-item">
+          <div class="aop__faq-q"><h3>¿Apta para piel sensible?</h3><span class="aop__faq-arr">▼</span></div>
+          <div class="aop__faq-a"><p>Sí. Tanto la luz roja como la microcorriente son tecnologías no invasivas aptas para piel sensible. Si tienes alguna condición dermatológica activa, consulta con tu dermatólogo antes.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA INFERIOR -->
+  <section class="aop__cta-bottom">
+    <div class="wrap">
+      <h2>¿Lista para <em>transformar tu mirada?</em></h2>
+      <p>Únete a más de 1.200 clientas que ya han eliminado sus ojeras con AliviaX.</p>
+      <div class="aop__cta-bottom-actions">
+        {%- if product != blank and current_variant != blank -%}
+          <form method="post" action="/cart/add" style="display:contents;">
+            <input type="hidden" name="id" value="{{ current_variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" class="btn-rose">🛒 AÑADIR AL CARRITO</button>
+          </form>
+        {%- else -%}
+          <a href="{{ section.settings.product_url | default: '/products/gafas-antiojeras-aliviax' }}" class="btn-rose">🛒 COMPRAR AHORA</a>
+        {%- endif -%}
+      </div>
+      <div class="trust-row">
+        <span>🛡️ 30 días sin riesgo</span>
+        <span>🚚 Envío gratis</span>
+        <span>🏆 Garantía 1 año</span>
+        <span>🔒 Pago seguro</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Galería de imágenes ── */
+  var display = document.getElementById('aop-img-display');
+  document.querySelectorAll('.aop__thumb').forEach(function (thumb) {
+    thumb.addEventListener('click', function () {
+      document.querySelectorAll('.aop__thumb').forEach(function (t) { t.classList.remove('active'); });
+      thumb.classList.add('active');
+      if (display && thumb.dataset.src) {
+        display.src = thumb.dataset.src;
+        if (thumb.dataset.alt) display.alt = thumb.dataset.alt;
+      }
+    });
+  });
+
+  /* ── Cantidad ── */
+  var qtyInput = document.getElementById('aop-qty');
+  var minusBtn = document.getElementById('aop-qty-minus');
+  var plusBtn  = document.getElementById('aop-qty-plus');
+  if (qtyInput && minusBtn && plusBtn) {
+    minusBtn.addEventListener('click', function () {
+      var v = parseInt(qtyInput.value, 10) || 1;
+      if (v > 1) qtyInput.value = v - 1;
+    });
+    plusBtn.addEventListener('click', function () {
+      var v = parseInt(qtyInput.value, 10) || 1;
+      if (v < 10) qtyInput.value = v + 1;
+    });
+  }
+
+  /* ── Acordeón detalles ── */
+  document.querySelectorAll('.aop__ac-item').forEach(function (item) {
+    item.querySelector('.aop__ac-q').addEventListener('click', function () {
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.aop__ac-item').forEach(function (i) { i.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  /* ── FAQ ── */
+  document.querySelectorAll('.aop__faq-item').forEach(function (item) {
+    item.querySelector('.aop__faq-q').addEventListener('click', function () {
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.aop__faq-item').forEach(function (i) { i.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+}());
+</script>
+
+{% schema %}
+{
+  "name": "AliviaX Producto",
+  "settings": [
+    { "type": "header", "content": "Imagen de respaldo" },
+    { "type": "image_picker", "id": "product_image", "label": "Imagen del producto" },
+    { "type": "header", "content": "Precios y enlace" },
+    { "type": "url",  "id": "product_url",  "label": "URL del producto" },
+    { "type": "text", "id": "price",      "label": "Precio actual",           "default": "49,99€" },
+    { "type": "text", "id": "old_price",  "label": "Precio original (tachado)","default": "79,99€" },
+    { "type": "text", "id": "badge_text", "label": "Badge de descuento",       "default": "-37%" }
+  ],
+  "presets": [{ "name": "AliviaX Producto" }]
+}
+{% endschema %}

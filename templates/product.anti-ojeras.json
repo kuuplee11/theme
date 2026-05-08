@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "product_main": {
+      "type": "ao-product",
+      "settings": {
+        "product_url": "/products/gafas-antiojeras-aliviax",
+        "price": "49,99€",
+        "old_price": "79,99€",
+        "badge_text": "-37%"
+      }
+    }
+  },
+  "order": ["product_main"]
+}

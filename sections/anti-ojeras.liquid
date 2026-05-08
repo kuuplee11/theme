@@ -1,0 +1,1312 @@
+{% comment %} AliviaX Anti-Ojeras — Landing Page v3 {% endcomment %}
+
+{%- liquid
+  assign product_url = section.settings.product_url | default: '/products/gafas-antiojeras-aliviax'
+  assign price       = section.settings.price       | default: '49,99€'
+  assign old_price   = section.settings.old_price   | default: '79,99€'
+  assign badge       = section.settings.badge_text  | default: '-37%'
+-%}
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   BASE & VARIABLES
+═══════════════════════════════════════════════════════════════ */
+.ao {
+  --white:    #ffffff;
+  --cream:    #f8f5f1;
+  --cream2:   #f2ede8;
+  --deep:     #121220;
+  --navy:     #1e1e30;
+  --rose:     #c25a70;
+  --rose-d:   #a84860;
+  --rose-l:   #f5c6d0;
+  --blush:    #fdeef1;
+  --gold:     #b8925a;
+  --muted:    #7a7a8c;
+  --border:   #e6e0ec;
+  --green:    #2da87a;
+  --r-s:      12px;
+  --r-m:      20px;
+  --r-l:      32px;
+  --sh-s:     0 2px 14px rgba(18,18,32,.07);
+  --sh-m:     0 8px 32px rgba(18,18,32,.10);
+  --sh-l:     0 20px 60px rgba(18,18,32,.13);
+  --t:        .22s ease;
+  color: var(--deep);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+.ao *, .ao *::before, .ao *::after { box-sizing: border-box; }
+.ao a { text-decoration: none; color: inherit; }
+.ao img { display: block; max-width: 100%; }
+.ao p { margin: 0; }
+
+.ao .wrap  { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.ao .wrap-s{ max-width: 820px;  margin: 0 auto; padding: 0 24px; }
+.ao .wrap-xs{ max-width: 640px; margin: 0 auto; padding: 0 24px; }
+
+.ao .eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 800; letter-spacing: .22em;
+  text-transform: uppercase; margin-bottom: 16px;
+  color: var(--rose);
+}
+.ao .eyebrow::before {
+  content: ""; display: block;
+  width: 22px; height: 2px; background: currentColor;
+}
+
+.ao h2.ttl {
+  margin: 0; line-height: 1.04; font-weight: 800; letter-spacing: -.04em;
+  font-size: clamp(32px, 4.2vw, 58px);
+}
+.ao h2.ttl em { font-style: italic; font-weight: 300; color: var(--rose); }
+.ao .sub {
+  margin-top: 16px; color: var(--muted);
+  font-size: 17px; line-height: 1.75;
+}
+
+.ao .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 54px; padding: 0 32px; border-radius: 999px;
+  font-size: 14px; font-weight: 800; letter-spacing: .04em;
+  text-transform: uppercase; cursor: pointer; border: none;
+  transition: all var(--t); text-decoration: none; white-space: nowrap;
+}
+.ao .btn-rose {
+  background: var(--rose); color: #fff;
+  box-shadow: 0 10px 30px rgba(194,90,112,.35);
+  animation: ao-breath 2.8s ease-in-out infinite;
+}
+.ao .btn-rose:hover { background: var(--rose-d); transform: translateY(-2px); box-shadow: 0 16px 38px rgba(194,90,112,.45); }
+.ao .btn-outline-d { background: transparent; color: var(--deep); border: 2px solid var(--deep); }
+.ao .btn-outline-d:hover { background: var(--deep); color: #fff; }
+.ao .btn-outline-w { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.35); }
+.ao .btn-outline-w:hover { background: rgba(255,255,255,.1); }
+.ao .btn-dark { background: var(--deep); color: #fff; box-shadow: var(--sh-m); }
+.ao .btn-dark:hover { background: var(--navy); transform: translateY(-2px); }
+
+@keyframes ao-breath {
+  0%,100% { box-shadow: 0 10px 28px rgba(194,90,112,.32); }
+  50%      { box-shadow: 0 16px 40px rgba(194,90,112,.50); }
+}
+@keyframes ao-float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+@keyframes ao-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   §1  HERO
+═══════════════════════════════════════════════════════════════ */
+.ao__hero {
+  background: var(--cream);
+  padding: 80px 24px 100px;
+  position: relative; overflow: hidden;
+}
+.ao__hero::before {
+  content: ""; pointer-events: none;
+  position: absolute; top: -160px; right: -160px;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,198,208,.4) 0%, transparent 65%);
+}
+.ao__hero::after {
+  content: ""; pointer-events: none;
+  position: absolute; bottom: -120px; left: -80px;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,146,90,.1) 0%, transparent 65%);
+}
+.ao__hero .wrap { position: relative; z-index: 1; }
+
+.ao__hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 56px; align-items: center;
+}
+.ao__hero-stars {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 20px;
+}
+.ao__hero-stars .stars { color: #d4a54a; font-size: 17px; letter-spacing: 1px; }
+.ao__hero-stars span { color: var(--muted); font-size: 13px; font-weight: 600; }
+.ao__hero h1 {
+  margin: 0; font-size: clamp(38px, 5.2vw, 70px);
+  line-height: .97; font-weight: 900; letter-spacing: -.05em;
+}
+.ao__hero h1 em { font-style: italic; font-weight: 300; color: var(--rose); display: block; }
+.ao__hero-lead {
+  margin-top: 22px; color: var(--muted); font-size: 17px; line-height: 1.72;
+  max-width: 42ch;
+}
+.ao__hero-pills {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+}
+.ao__pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 32px; padding: 0 14px; border-radius: 999px;
+  background: var(--white); border: 1px solid var(--border);
+  font-size: 12px; font-weight: 700; color: var(--deep);
+  box-shadow: var(--sh-s);
+}
+.ao__hero-actions {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px;
+}
+.ao__hero-note {
+  margin-top: 14px; color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 6px;
+}
+.ao__hero-note::before { content: "🛡️"; font-size: 13px; }
+
+/* visual side */
+.ao__hero-visual { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.ao__product-frame {
+  width: 100%; max-width: 460px; aspect-ratio: 1;
+  border-radius: var(--r-l); overflow: hidden;
+  background: linear-gradient(145deg, #fce6ec, #f9f0f4, #ede9f5);
+  box-shadow: var(--sh-l);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.ao__product-frame::after {
+  content: ""; pointer-events: none;
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 35%, rgba(194,90,112,.1), transparent 60%);
+}
+.ao__product-frame img {
+  width: 88%; height: 88%; object-fit: contain; position: relative; z-index: 1;
+  animation: ao-float 7s ease-in-out infinite;
+}
+.ao__product-frame .ph {
+  width: 72%; aspect-ratio: 1; border-radius: var(--r-m);
+  background: linear-gradient(135deg, var(--rose-l), var(--rose));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 72px; position: relative; z-index: 1;
+  animation: ao-float 7s ease-in-out infinite;
+}
+.ao__price-card {
+  width: 100%; max-width: 460px;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-m); padding: 22px 26px;
+  box-shadow: var(--sh-m); display: flex; gap: 16px; align-items: center;
+}
+.ao__price-card-label { flex: 1; }
+.ao__price-card-label strong { display: block; font-size: 15px; font-weight: 800; color: var(--deep); }
+.ao__price-card-label span { font-size: 13px; color: var(--muted); }
+.ao__price-nums {
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+}
+.ao__price-nums .old { color: #bbb; text-decoration: line-through; font-size: 16px; font-weight: 600; }
+.ao__price-nums .cur { color: var(--deep); font-size: 30px; font-weight: 900; letter-spacing: -.04em; line-height: 1; }
+.ao__price-badge {
+  height: 28px; padding: 0 12px; border-radius: 999px;
+  background: var(--rose); color: #fff; font-size: 12px; font-weight: 800;
+  display: inline-flex; align-items: center; flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   §2  TRUST BAR
+═══════════════════════════════════════════════════════════════ */
+.ao__trust {
+  background: var(--white);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 18px 24px;
+}
+.ao__trust-list {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: center; flex-wrap: wrap;
+}
+.ao__trust-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 28px; border-right: 1px solid var(--border);
+}
+.ao__trust-item:last-child { border-right: none; }
+.ao__trust-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
+.ao__trust-text strong { display: block; font-size: 13px; font-weight: 800; color: var(--deep); }
+.ao__trust-text span { display: block; font-size: 11px; color: var(--muted); }
+
+/* ═══════════════════════════════════════════════════════════════
+   §3  PROBLEMA → SOLUCIÓN
+═══════════════════════════════════════════════════════════════ */
+.ao__problem {
+  background: var(--deep); padding: 100px 24px;
+  position: relative; overflow: hidden;
+}
+.ao__problem::before {
+  content: ""; pointer-events: none;
+  position: absolute; top: -100px; right: -100px;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(194,90,112,.14), transparent 65%);
+}
+.ao__problem .wrap { position: relative; z-index: 1; }
+.ao__problem .eyebrow { color: var(--rose-l); }
+.ao__problem h2.ttl { color: var(--white); }
+.ao__problem h2.ttl em { color: var(--rose-l); }
+.ao__problem .sub { color: rgba(255,255,255,.65); }
+
+.ao__problem-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 36px; margin-top: 52px; align-items: start;
+}
+.ao__problem-quote {
+  font-size: clamp(19px, 2.2vw, 24px); line-height: 1.5;
+  font-style: italic; color: var(--white);
+  border-left: 3px solid var(--rose); padding-left: 22px; margin: 0 0 28px;
+}
+.ao__problem-text { color: rgba(255,255,255,.72); font-size: 16px; line-height: 1.75; margin-bottom: 16px; }
+.ao__pcards { display: grid; gap: 14px; }
+.ao__pcard {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--r-m); padding: 22px;
+  display: flex; align-items: flex-start; gap: 16px;
+  transition: background var(--t);
+}
+.ao__pcard:hover { background: rgba(255,255,255,.08); }
+.ao__pcard-icon { font-size: 28px; line-height: 1; flex-shrink: 0; }
+.ao__pcard h4 { margin: 0 0 5px; color: var(--white); font-size: 15px; font-weight: 800; }
+.ao__pcard p { color: rgba(255,255,255,.65); font-size: 14px; line-height: 1.62; }
+
+.ao__sol {
+  background: rgba(194,90,112,.08); border: 1px solid rgba(194,90,112,.2);
+  border-radius: var(--r-l); padding: 32px 30px;
+}
+.ao__sol-head {
+  font-size: 11px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--rose-l); margin-bottom: 22px; display: flex; align-items: center; gap: 8px;
+}
+.ao__sol-items { display: grid; gap: 18px; }
+.ao__sol-item { display: flex; align-items: flex-start; gap: 14px; }
+.ao__sol-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--rose); flex-shrink: 0; margin-top: 5px;
+}
+.ao__sol-item p { color: var(--white); font-size: 15px; line-height: 1.65; }
+.ao__sol-item strong { color: var(--rose-l); }
+
+.ao__problem-cta { text-align: center; margin-top: 52px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   §4  TECNOLOGÍA DUAL
+═══════════════════════════════════════════════════════════════ */
+.ao__tech { background: var(--white); padding: 100px 24px; }
+.ao__tech-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+.ao__tech-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+}
+.ao__tcard {
+  border-radius: var(--r-l); padding: 44px 40px;
+  position: relative; overflow: hidden;
+  transition: box-shadow var(--t), transform var(--t);
+}
+.ao__tcard:hover { box-shadow: var(--sh-l); transform: translateY(-4px); }
+.ao__tcard.red  { background: var(--blush); border: 1px solid rgba(194,90,112,.15); }
+.ao__tcard.blue { background: #f0f0ff; border: 1px solid rgba(100,100,220,.1); }
+.ao__tcard::before {
+  content: ""; pointer-events: none;
+  position: absolute; top: -50px; right: -50px;
+  width: 200px; height: 200px; border-radius: 50%; opacity: .2;
+}
+.ao__tcard.red::before  { background: var(--rose); }
+.ao__tcard.blue::before { background: #7b7bef; }
+.ao__tcard-n {
+  font-size: 88px; font-weight: 900; line-height: 1;
+  letter-spacing: -.07em; margin-bottom: 14px; opacity: .12;
+}
+.ao__tcard.red  .ao__tcard-n { color: var(--rose); }
+.ao__tcard.blue .ao__tcard-n { color: #7b7bef; }
+.ao__tcard-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  height: 30px; padding: 0 14px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em;
+  margin-bottom: 18px;
+}
+.ao__tcard.red  .ao__tcard-badge { background: rgba(194,90,112,.12); color: var(--rose-d); }
+.ao__tcard.blue .ao__tcard-badge { background: rgba(123,123,239,.1); color: #5a5aaa; }
+.ao__tcard h3 { margin: 0 0 14px; font-size: 26px; font-weight: 800; letter-spacing: -.04em; color: var(--deep); }
+.ao__tcard > p { color: var(--muted); font-size: 15px; line-height: 1.72; }
+.ao__tcard-specs { display: grid; gap: 10px; margin-top: 22px; }
+.ao__tcard-spec { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--deep); }
+.ao__tcard-spec::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.ao__tcard.red  .ao__tcard-spec::before { background: var(--rose); }
+.ao__tcard.blue .ao__tcard-spec::before { background: #7b7bef; }
+
+/* ═══════════════════════════════════════════════════════════════
+   §5  TIMELINE RESULTADOS
+═══════════════════════════════════════════════════════════════ */
+.ao__results { background: var(--cream); padding: 100px 24px; }
+.ao__results-head { text-align: center; max-width: 600px; margin: 0 auto 56px; }
+.ao__timeline { position: relative; padding-left: 52px; }
+.ao__timeline::before {
+  content: ""; position: absolute; left: 19px; top: 10px; bottom: 10px; width: 2px;
+  background: linear-gradient(to bottom, var(--rose-l), var(--rose), var(--rose-l));
+}
+.ao__week {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-m); padding: 32px 34px; margin-bottom: 20px;
+  position: relative; transition: box-shadow var(--t);
+}
+.ao__week:hover { box-shadow: var(--sh-m); }
+.ao__week:last-child { margin-bottom: 0; }
+.ao__week::before {
+  content: ""; position: absolute; left: -41px; top: 32px;
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 3px solid var(--cream); z-index: 1;
+}
+.ao__week:nth-child(1)::before { background: var(--rose-l); }
+.ao__week:nth-child(2)::before { background: var(--rose); }
+.ao__week:nth-child(3)::before { background: var(--deep); }
+.ao__week-emoji { float: right; font-size: 38px; margin: -4px 0 12px 16px; line-height: 1; }
+.ao__week-tag {
+  display: inline-flex; align-items: center;
+  height: 24px; padding: 0 12px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em;
+  margin-bottom: 12px;
+}
+.ao__week:nth-child(1) .ao__week-tag { background: rgba(194,90,112,.1); color: var(--rose-d); }
+.ao__week:nth-child(2) .ao__week-tag { background: var(--rose); color: #fff; }
+.ao__week:nth-child(3) .ao__week-tag { background: var(--deep); color: #fff; }
+.ao__week h3 { margin: 0 0 10px; font-size: 22px; font-weight: 800; letter-spacing: -.03em; color: var(--deep); }
+.ao__week p  { color: var(--muted); font-size: 15px; line-height: 1.7; }
+.ao__week small { display: block; margin-top: 12px; color: #aaa; font-size: 12px; }
+.ao__results-cta { text-align: center; margin-top: 48px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   §6  TESTIMONIOS
+═══════════════════════════════════════════════════════════════ */
+.ao__reviews { background: var(--white); padding: 100px 24px; }
+.ao__reviews-head { text-align: center; max-width: 620px; margin: 0 auto 14px; }
+.ao__reviews-bar {
+  display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 52px;
+}
+.ao__reviews-bar .stars { color: #d4a54a; font-size: 20px; letter-spacing: 2px; }
+.ao__reviews-bar span { color: var(--muted); font-size: 14px; font-weight: 600; }
+.ao__review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.ao__rcard {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: var(--r-m); padding: 30px 28px;
+  transition: box-shadow var(--t), transform var(--t);
+}
+.ao__rcard:hover { box-shadow: var(--sh-m); transform: translateY(-3px); }
+.ao__rcard.featured { border-color: var(--rose-l); background: var(--blush); box-shadow: var(--sh-m); }
+.ao__rcard .verified {
+  display: inline-flex; align-items: center; gap: 5px;
+  height: 22px; padding: 0 10px; border-radius: 999px;
+  background: rgba(45,168,122,.1); color: var(--green);
+  font-size: 11px; font-weight: 700; margin-bottom: 14px;
+}
+.ao__rcard-stars { color: #d4a54a; font-size: 15px; margin-bottom: 10px; }
+.ao__rcard-week {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+  height: 24px; padding: 0 10px; font-size: 11px; font-weight: 700; color: var(--muted);
+  margin-bottom: 14px;
+}
+.ao__rcard blockquote {
+  margin: 0 0 20px; font-size: 15px; line-height: 1.7;
+  color: var(--deep); font-style: italic;
+}
+.ao__rcard-author { display: flex; align-items: center; gap: 12px; }
+.ao__avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose-l), var(--rose));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; font-weight: 900; color: #fff; flex-shrink: 0;
+}
+.ao__rcard-name { font-size: 14px; font-weight: 800; color: var(--deep); }
+.ao__rcard-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   §7  CÓMO USAR
+═══════════════════════════════════════════════════════════════ */
+.ao__how { background: var(--deep); padding: 100px 24px; position: relative; overflow: hidden; }
+.ao__how::after {
+  content: ""; pointer-events: none;
+  position: absolute; bottom: -80px; right: -80px;
+  width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(194,90,112,.12), transparent 65%);
+}
+.ao__how .wrap { position: relative; z-index: 1; }
+.ao__how .eyebrow { color: var(--rose-l); }
+.ao__how h2.ttl { color: var(--white); }
+.ao__how h2.ttl em { color: var(--rose-l); }
+.ao__how-head { text-align: center; max-width: 580px; margin: 0 auto 56px; }
+.ao__steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.ao__step {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+  border-radius: var(--r-m); padding: 28px 18px; text-align: center;
+  transition: background var(--t);
+}
+.ao__step:hover { background: rgba(255,255,255,.09); }
+.ao__step-icon {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: rgba(194,90,112,.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin: 0 auto 16px;
+}
+.ao__step-n { color: var(--rose); font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.ao__step h4 { margin: 0 0 8px; color: var(--white); font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+.ao__step p { color: rgba(255,255,255,.62); font-size: 13px; line-height: 1.62; }
+.ao__how-note {
+  background: rgba(194,90,112,.08); border: 1px solid rgba(194,90,112,.18);
+  border-radius: var(--r-m); padding: 20px 28px; margin-top: 32px; text-align: center;
+  color: rgba(255,255,255,.8); font-size: 14px; line-height: 1.6;
+}
+.ao__how-note strong { color: var(--rose-l); }
+
+/* ═══════════════════════════════════════════════════════════════
+   §8  ESPECIFICACIONES
+═══════════════════════════════════════════════════════════════ */
+.ao__specs { background: var(--cream); padding: 100px 24px; }
+.ao__specs-head { text-align: center; max-width: 600px; margin: 0 auto 48px; }
+.ao__specs-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.ao__spec-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.ao__spec-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-m); padding: 22px 20px;
+  transition: box-shadow var(--t), transform var(--t);
+}
+.ao__spec-card:hover { box-shadow: var(--sh-m); transform: translateY(-2px); }
+.ao__spec-card-icon { font-size: 26px; margin-bottom: 12px; }
+.ao__spec-card-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-bottom: 5px; }
+.ao__spec-card-val { font-size: 15px; font-weight: 800; color: var(--deep); line-height: 1.4; }
+
+.ao__spec-table {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-m); overflow: hidden;
+}
+.ao__spec-row {
+  display: grid; grid-template-columns: 160px 1fr;
+  border-bottom: 1px solid var(--border); padding: 15px 22px;
+}
+.ao__spec-row:last-child { border-bottom: none; }
+.ao__spec-row:nth-child(even) { background: var(--cream); }
+.ao__spec-row-k { color: var(--muted); font-size: 13px; font-weight: 700; }
+.ao__spec-row-v { color: var(--deep); font-size: 13px; font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════════════════
+   §9  COMPARATIVA
+═══════════════════════════════════════════════════════════════ */
+.ao__compare { background: var(--white); padding: 100px 24px; }
+.ao__compare-head { text-align: center; max-width: 620px; margin: 0 auto 48px; }
+.ao__compare-wrap { max-width: 860px; margin: 0 auto; }
+.ao__compare-table {
+  border: 1px solid var(--border); border-radius: var(--r-m); overflow: hidden;
+}
+.ao__cmp-header {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  background: var(--deep); padding: 14px 24px; gap: 8px;
+}
+.ao__cmp-header span {
+  font-size: 13px; font-weight: 800; text-align: center; color: rgba(255,255,255,.6);
+}
+.ao__cmp-header span:first-child { text-align: left; }
+.ao__cmp-header .ao__cmp-hl { color: var(--rose-l); }
+.ao__cmp-row {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 15px 24px; border-bottom: 1px solid var(--border);
+  align-items: center; gap: 8px;
+}
+.ao__cmp-row:last-child { border-bottom: none; }
+.ao__cmp-row:nth-child(even) { background: var(--cream); }
+.ao__cmp-feat { font-size: 14px; font-weight: 700; color: var(--deep); }
+.ao__cmp-cell { text-align: center; font-size: 18px; line-height: 1; }
+.ao__cmp-cell.y { color: var(--green); }
+.ao__cmp-cell.n { color: #e05050; }
+.ao__cmp-cell.t { font-size: 12px; font-weight: 700; color: var(--muted); }
+.ao__cmp-cell.t.ao-val { color: var(--rose-d); font-size: 13px; font-weight: 800; }
+
+/* ═══════════════════════════════════════════════════════════════
+   §10  FAQ
+═══════════════════════════════════════════════════════════════ */
+.ao__faq { background: var(--cream); padding: 100px 24px; }
+.ao__faq-head { text-align: center; max-width: 580px; margin: 0 auto 48px; }
+.ao__faq-list { display: grid; gap: 10px; }
+.ao__faq-item {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-m); overflow: hidden; transition: border-color var(--t);
+}
+.ao__faq-item.open { border-color: var(--rose-l); }
+.ao__faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 22px 24px; cursor: pointer; gap: 16px; user-select: none;
+}
+.ao__faq-q h3 { margin: 0; font-size: 16px; font-weight: 700; line-height: 1.4; color: var(--deep); }
+.ao__faq-arrow {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--cream); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; color: var(--rose); font-size: 13px;
+  transition: transform var(--t), background var(--t);
+}
+.ao__faq-item.open .ao__faq-arrow { transform: rotate(180deg); background: var(--blush); }
+.ao__faq-a { display: none; padding: 0 24px 22px; }
+.ao__faq-item.open .ao__faq-a { display: block; }
+.ao__faq-a p { color: var(--muted); font-size: 15px; line-height: 1.72; }
+.ao__faq-cta { text-align: center; margin-top: 48px; }
+.ao__faq-cta p { color: var(--muted); font-size: 15px; margin-bottom: 20px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   §11  CTA FINAL
+═══════════════════════════════════════════════════════════════ */
+.ao__final { background: var(--deep); padding: 100px 24px; position: relative; overflow: hidden; }
+.ao__final::before {
+  content: ""; pointer-events: none;
+  position: absolute; top: -100px; left: -100px;
+  width: 560px; height: 560px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(194,90,112,.14), transparent 65%);
+}
+.ao__final::after {
+  content: ""; pointer-events: none;
+  position: absolute; bottom: -80px; right: -80px;
+  width: 440px; height: 440px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,146,90,.1), transparent 65%); animation: ao-float 10s ease-in-out infinite;
+}
+.ao__final .wrap { position: relative; z-index: 1; }
+.ao__final-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.ao__final .eyebrow {
+  color: #fff; background: rgba(194,90,112,.2); border: 1px solid rgba(194,90,112,.3);
+  border-radius: 999px; padding: 0 16px; min-height: 28px;
+  animation: ao-breath 2.6s ease-in-out infinite;
+}
+.ao__final .eyebrow::before { display: none; }
+.ao__final h2.ttl { color: var(--white); margin-top: 16px; }
+.ao__final h2.ttl em { color: var(--rose-l); }
+.ao__final .sub { color: rgba(255,255,255,.68); }
+.ao__final-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.ao__final-tag {
+  height: 34px; padding: 0 14px; border-radius: 999px;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+  color: var(--white); font-size: 13px; font-weight: 700;
+  display: inline-flex; align-items: center; gap: 6px;
+  backdrop-filter: blur(4px);
+}
+.ao__final-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+
+.ao__final-side {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--r-l); padding: 32px 30px;
+  backdrop-filter: blur(8px);
+}
+.ao__timer-lbl { font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--rose-l); margin-bottom: 16px; }
+.ao__timer { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px; }
+.ao__tbox {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px; padding: 18px 10px; text-align: center;
+}
+.ao__tbox strong { display: block; color: var(--white); font-size: 34px; font-weight: 900; letter-spacing: -.04em; line-height: 1; }
+.ao__tbox span { display: block; margin-top: 6px; color: rgba(255,255,255,.55); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.ao__grnts { display: grid; gap: 16px; }
+.ao__grnt { display: flex; align-items: flex-start; gap: 13px; }
+.ao__grnt-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: rgba(194,90,112,.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.ao__grnt-text h4 { margin: 0 0 2px; color: var(--white); font-size: 15px; font-weight: 800; }
+.ao__grnt-text p  { color: rgba(255,255,255,.6); font-size: 13px; line-height: 1.5; }
+
+/* ═══════════════════════════════════════════════════════════════
+   STICKY CTA MÓVIL
+═══════════════════════════════════════════════════════════════ */
+.ao__sticky {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+  background: var(--deep); border-top: 1px solid rgba(255,255,255,.12);
+  padding: 12px 16px; box-shadow: 0 -8px 32px rgba(18,18,32,.2);
+  transform: translateY(100%); transition: transform .3s ease;
+}
+.ao__sticky-inner { display: flex; align-items: center; gap: 14px; }
+.ao__sticky-price { flex-shrink: 0; line-height: 1; }
+.ao__sticky-price .s-old { color: rgba(255,255,255,.4); text-decoration: line-through; font-size: 12px; }
+.ao__sticky-price .s-cur { color: #fff; font-size: 24px; font-weight: 900; letter-spacing: -.04em; }
+.ao__sticky .btn-rose { flex: 1; min-height: 48px; font-size: 13px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 990px) {
+  .ao__hero-grid,
+  .ao__problem-grid,
+  .ao__tech-grid,
+  .ao__specs-layout,
+  .ao__final-grid { grid-template-columns: 1fr; }
+  .ao__steps { grid-template-columns: repeat(3, 1fr); }
+  .ao__review-grid { grid-template-columns: 1fr 1fr; }
+  .ao__trust-item { border-right: none; padding: 8px 20px; }
+  .ao__trust-list { justify-content: flex-start; }
+}
+@media (max-width: 640px) {
+  .ao__hero,
+  .ao__problem,
+  .ao__tech,
+  .ao__results,
+  .ao__reviews,
+  .ao__how,
+  .ao__specs,
+  .ao__compare,
+  .ao__faq,
+  .ao__final { padding-top: 72px; padding-bottom: 72px; }
+  .ao__hero h1 { font-size: 36px; }
+  .ao__hero-actions { display: grid; }
+  .ao__hero-actions .btn { width: 100%; }
+  .ao__product-frame { max-width: 100%; }
+  .ao__steps { grid-template-columns: 1fr; }
+  .ao__review-grid { grid-template-columns: 1fr; }
+  .ao__spec-cards { grid-template-columns: 1fr; }
+  .ao__spec-row { grid-template-columns: 1fr; gap: 2px; }
+  .ao__compare-table { overflow-x: auto; }
+  .ao__final-actions { display: grid; }
+  .ao__final-actions .btn { width: 100%; }
+  .ao__timeline { padding-left: 34px; }
+  .ao__week { padding: 22px 20px; }
+  .ao__week::before { left: -26px; }
+  .ao__sticky { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ao__product-frame img,
+  .ao__final::after { animation: none; }
+  .ao .btn-rose,
+  .ao__final .eyebrow { animation: none; }
+}
+</style>
+
+<div class="ao">
+
+  <!-- ══ §1 HERO ══════════════════════════════════════════════ -->
+  <section class="ao__hero">
+    <div class="wrap">
+      <div class="ao__hero-grid">
+
+        <div class="ao__hero-copy">
+          <div class="ao__hero-stars">
+            <span class="stars">★★★★★</span>
+            <span>4.9/5 · +1.200 clientas satisfechas</span>
+          </div>
+          <span class="eyebrow">Luz Roja LED + Microcorriente EMS</span>
+          <h1>
+            Adiós a las ojeras.
+            <em>Bienvenida la mirada que mereces.</em>
+          </h1>
+          <p class="ao__hero-lead">
+            Las Gafas AliviaX tratan las ojeras y bolsas desde la raíz con tecnología dual de luz roja LED 630–660 nm y microcorriente EMS. Solo 10 minutos al día, desde casa.
+          </p>
+          <div class="ao__hero-pills">
+            <span class="ao__pill">✓ Sin agujas ni clínicas</span>
+            <span class="ao__pill">✓ Resultados en 2 semanas</span>
+            <span class="ao__pill">✓ Piel sensible: apta</span>
+          </div>
+          <div class="ao__hero-actions">
+            <a class="btn btn-rose" href="{{ product_url }}">
+              COMPRAR AHORA — {{ price }}
+            </a>
+            <button class="btn btn-outline-d" type="button" data-scrollto="#ao-tech">
+              VER CÓMO FUNCIONA
+            </button>
+          </div>
+          <p class="ao__hero-note">
+            30 días de garantía de devolución · Envío gratis · Stock limitado
+          </p>
+        </div>
+
+        <div class="ao__hero-visual">
+          <div class="ao__product-frame">
+            {%- if section.settings.product_image != blank -%}
+              {{ section.settings.product_image | image_url: width: 960 | image_tag: alt: 'Gafas AliviaX Anti-Ojeras', loading: 'eager', fetchpriority: 'high' }}
+            {%- else -%}
+              <div class="ph">👓</div>
+            {%- endif -%}
+          </div>
+          <div class="ao__price-card">
+            <div class="ao__price-card-label">
+              <strong>Gafas AliviaX Anti-Ojeras</strong>
+              <span>Tecnología Dual LED + EMS</span>
+            </div>
+            <div class="ao__price-nums">
+              <span class="old">{{ old_price }}</span>
+              <span class="cur">{{ price }}</span>
+            </div>
+            <span class="ao__price-badge">{{ badge }}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ §2 TRUST BAR ══════════════════════════════════════════ -->
+  <div class="ao__trust">
+    <ul class="ao__trust-list">
+      <li class="ao__trust-item">
+        <span class="ao__trust-icon">🛡️</span>
+        <div class="ao__trust-text">
+          <strong>30 días sin riesgo</strong>
+          <span>Devolución garantizada</span>
+        </div>
+      </li>
+      <li class="ao__trust-item">
+        <span class="ao__trust-icon">🚚</span>
+        <div class="ao__trust-text">
+          <strong>Envío gratis</strong>
+          <span>3–5 días · España peninsular</span>
+        </div>
+      </li>
+      <li class="ao__trust-item">
+        <span class="ao__trust-icon">🏥</span>
+        <div class="ao__trust-text">
+          <strong>Grado médico</strong>
+          <span>ABS · Apta piel sensible</span>
+        </div>
+      </li>
+      <li class="ao__trust-item">
+        <span class="ao__trust-icon">🔒</span>
+        <div class="ao__trust-text">
+          <strong>Pago seguro</strong>
+          <span>Tarjeta, Bizum y PayPal</span>
+        </div>
+      </li>
+      <li class="ao__trust-item">
+        <span class="ao__trust-icon">🏆</span>
+        <div class="ao__trust-text">
+          <strong>Garantía 1 año</strong>
+          <span>Servicio técnico incluido</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ══ §3 PROBLEMA → SOLUCIÓN ═══════════════════════════════ -->
+  <section class="ao__problem">
+    <div class="wrap">
+      <span class="eyebrow">El problema real</span>
+      <h2 class="ttl">Las ojeras no son un defecto.<br><em>Son agotamiento acumulado.</em></h2>
+
+      <div class="ao__problem-grid">
+        <div>
+          <blockquote class="ao__problem-quote">
+            "El maquillaje solo las tapa.<br>Las Gafas AliviaX las tratan."
+          </blockquote>
+          <p class="ao__problem-text">La circulación deficiente, el estrés y el paso del tiempo debilitan la piel del contorno de ojos. Los correctores actúan en la superficie. AliviaX actúa donde el problema realmente existe.</p>
+          <div class="ao__pcards">
+            <div class="ao__pcard">
+              <span class="ao__pcard-icon">😴</span>
+              <div>
+                <h4>Circulación deficiente</h4>
+                <p>La mala circulación en el contorno de ojos oxida la hemoglobina, creando el tono oscuro característico de las ojeras vasculares.</p>
+              </div>
+            </div>
+            <div class="ao__pcard">
+              <span class="ao__pcard-icon">💧</span>
+              <div>
+                <h4>Retención de líquidos</h4>
+                <p>El drenaje linfático ralentizado provoca acumulación de fluidos bajo los ojos, causando las bolsas.</p>
+              </div>
+            </div>
+            <div class="ao__pcard">
+              <span class="ao__pcard-icon">⏳</span>
+              <div>
+                <h4>Pérdida de colágeno</h4>
+                <p>A partir de los 25 años la producción de colágeno disminuye. La piel del contorno de ojos lo refleja primero.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ao__sol">
+          <div class="ao__sol-head">✦ AliviaX actúa en las tres causas</div>
+          <div class="ao__sol-items">
+            <div class="ao__sol-item">
+              <span class="ao__sol-dot"></span>
+              <p><strong>Reactiva la microcirculación</strong> con luz roja de 630–660 nm que oxigena los tejidos y aclara el tono.</p>
+            </div>
+            <div class="ao__sol-item">
+              <span class="ao__sol-dot"></span>
+              <p><strong>Activa el drenaje linfático</strong> con microcorriente EMS que descongestiona la zona y reduce las bolsas.</p>
+            </div>
+            <div class="ao__sol-item">
+              <span class="ao__sol-dot"></span>
+              <p><strong>Estimula el colágeno natural</strong> para devolver firmeza y luminosidad a la piel periocular.</p>
+            </div>
+            <div class="ao__sol-item">
+              <span class="ao__sol-dot"></span>
+              <p><strong>Solo 10 minutos al día.</strong> La sesión se detiene automáticamente. Sin complicaciones.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ao__problem-cta">
+        <a class="btn btn-rose" href="{{ product_url }}">QUIERO TRATAR MIS OJERAS</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ §4 TECNOLOGÍA ══════════════════════════════════════════ -->
+  <section class="ao__tech" id="ao-tech">
+    <div class="wrap">
+      <div class="ao__tech-head">
+        <span class="eyebrow">Tecnología dual</span>
+        <h2 class="ttl">Dos tecnologías.<br><em>Un resultado.</em></h2>
+        <p class="sub">La misma tecnología usada en cabinas de estética profesional, ahora en tus manos. En casa. En 10 minutos.</p>
+      </div>
+      <div class="ao__tech-grid">
+        <div class="ao__tcard red">
+          <div class="ao__tcard-n">01</div>
+          <span class="ao__tcard-badge">🔴 Luz Roja LED</span>
+          <h3>Luz Roja LED 630–660 nm</h3>
+          <p>La longitud de onda de 630–660 nm penetra la dermis para estimular la producción natural de colágeno y reactivar la microcirculación. La misma tecnología de las cabinas de estética de alta gama — ahora en uso doméstico.</p>
+          <div class="ao__tcard-specs">
+            <div class="ao__tcard-spec">Estimula la producción de colágeno</div>
+            <div class="ao__tcard-spec">Reactiva la microcirculación</div>
+            <div class="ao__tcard-spec">Aclara el tono oscuro del contorno</div>
+            <div class="ao__tcard-spec">No ionizante — 100% segura</div>
+          </div>
+        </div>
+        <div class="ao__tcard blue">
+          <div class="ao__tcard-n">02</div>
+          <span class="ao__tcard-badge">⚡ Microcorriente EMS</span>
+          <h3>Microcorriente EMS</h3>
+          <p>Impulsos de baja frecuencia que tonifican el músculo orbicular, favorecen el drenaje linfático y reducen la retención de líquidos que causa las bolsas bajo los ojos. Imperceptible pero profundamente efectiva.</p>
+          <div class="ao__tcard-specs">
+            <div class="ao__tcard-spec">Tonifica el músculo orbicular</div>
+            <div class="ao__tcard-spec">Activa el drenaje linfático</div>
+            <div class="ao__tcard-spec">Reduce bolsas por retención</div>
+            <div class="ao__tcard-spec">Apta para todo tipo de piel</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ §5 TIMELINE RESULTADOS ════════════════════════════════ -->
+  <section class="ao__results">
+    <div class="wrap-s">
+      <div class="ao__results-head">
+        <span class="eyebrow">Resultados reales</span>
+        <h2 class="ttl">Lo que notas <em>semana a semana.</em></h2>
+        <p class="sub">Así transforma AliviaX el contorno de tus ojos de forma progresiva y sostenida.</p>
+      </div>
+      <div class="ao__timeline">
+        <div class="ao__week">
+          <span class="ao__week-emoji">🌸</span>
+          <span class="ao__week-tag">Semana 1–2</span>
+          <h3>La piel se siente más firme y descansada</h3>
+          <p>Desde las primeras sesiones notarás la piel del contorno de ojos más hidratada y tonificada. La sensación de pesadez disminuye. El proceso ha comenzado.</p>
+        </div>
+        <div class="ao__week">
+          <span class="ao__week-emoji">✨</span>
+          <span class="ao__week-tag">Semana 3–4</span>
+          <h3>Ojeras más claras, bolsas visiblemente reducidas</h3>
+          <p>Con 3–5 sesiones semanales, los cambios se vuelven visibles: el tono oscuro se aclara y las bolsas se reducen. Tu mirada recupera luminosidad natural.</p>
+        </div>
+        <div class="ao__week">
+          <span class="ao__week-emoji">🪄</span>
+          <span class="ao__week-tag">Semana 5–8 — Resultado visible</span>
+          <h3>Luminosidad, firmeza y líneas suavizadas</h3>
+          <p>El contorno de ojos luce más joven, más descansado y más definido. Un cambio que tú notas — y los demás también.</p>
+          <small>* Resultados individuales. Uso recomendado: 3–5 sesiones por semana.</small>
+        </div>
+      </div>
+      <div class="ao__results-cta">
+        <a class="btn btn-rose" href="{{ product_url }}">EMPEZAR MI TRATAMIENTO</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ §6 TESTIMONIOS ═════════════════════════════════════════ -->
+  <section class="ao__reviews">
+    <div class="wrap">
+      <div class="ao__reviews-head">
+        <span class="eyebrow">Lo que dicen nuestras clientas</span>
+        <h2 class="ttl">Resultados reales, <em>voces reales.</em></h2>
+      </div>
+      <div class="ao__reviews-bar">
+        <span class="stars">★★★★★</span>
+        <span>4.9 / 5 — más de 1.200 valoraciones verificadas</span>
+      </div>
+      <div class="ao__review-grid">
+        <div class="ao__rcard featured">
+          <span class="verified">✔ Compra verificada</span>
+          <div class="ao__rcard-stars">★★★★★</div>
+          <span class="ao__rcard-week">📅 Resultado a las 4 semanas</span>
+          <blockquote>"Llevaba años con ojeras horribles. Probé mil cremas y nada. A las 4 semanas de usar las gafas, mi pareja me preguntó si había dormido mejor. No era el sueño — eran las gafas. Impresionante."</blockquote>
+          <div class="ao__rcard-author">
+            <div class="ao__avatar">L</div>
+            <div>
+              <div class="ao__rcard-name">Laura M.</div>
+              <div class="ao__rcard-meta">Madrid · 38 años</div>
+            </div>
+          </div>
+        </div>
+        <div class="ao__rcard">
+          <span class="verified">✔ Compra verificada</span>
+          <div class="ao__rcard-stars">★★★★★</div>
+          <span class="ao__rcard-week">📅 Resultado a las 6 semanas</span>
+          <blockquote>"Soy muy escéptica con este tipo de productos. Las compré, las usé 4 veces por semana y… funcionan. Las bolsas han bajado muchísimo. Ya las he recomendado a tres amigas."</blockquote>
+          <div class="ao__rcard-author">
+            <div class="ao__avatar">S</div>
+            <div>
+              <div class="ao__rcard-name">Sofía R.</div>
+              <div class="ao__rcard-meta">Barcelona · 44 años</div>
+            </div>
+          </div>
+        </div>
+        <div class="ao__rcard">
+          <span class="verified">✔ Compra verificada</span>
+          <div class="ao__rcard-stars">★★★★★</div>
+          <span class="ao__rcard-week">📅 Resultado a las 3 semanas</span>
+          <blockquote>"Las uso por la noche mientras leo. En 10 minutos terminan solas. A las 3 semanas el tono mejoró notablemente — mis compañeras de trabajo me preguntan qué me hago. ¡100% recomendadas!"</blockquote>
+          <div class="ao__rcard-author">
+            <div class="ao__avatar">C</div>
+            <div>
+              <div class="ao__rcard-name">Carmen G.</div>
+              <div class="ao__rcard-meta">Valencia · 51 años</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ §7 CÓMO USAR ═══════════════════════════════════════════ -->
+  <section class="ao__how">
+    <div class="wrap">
+      <div class="ao__how-head">
+        <span class="eyebrow">Instrucciones de uso</span>
+        <h2 class="ttl">Cómo usarlas. <em>Fácil.</em></h2>
+      </div>
+      <div class="ao__steps">
+        <div class="ao__step">
+          <div class="ao__step-icon">🧼</div>
+          <div class="ao__step-n">Paso 1</div>
+          <h4>Limpia y prepara</h4>
+          <p>Limpia el contorno de ojos y aplica un sérum o crema hidratante para mejorar la conductividad de la microcorriente.</p>
+        </div>
+        <div class="ao__step">
+          <div class="ao__step-icon">👓</div>
+          <div class="ao__step-n">Paso 2</div>
+          <h4>Coloca las gafas</h4>
+          <p>Ajusta las gafas asegurando contacto firme con la piel. Sin lentillas.</p>
+        </div>
+        <div class="ao__step">
+          <div class="ao__step-icon">⚡</div>
+          <div class="ao__step-n">Paso 3</div>
+          <h4>Enciéndelas</h4>
+          <p>Mantén pulsado el botón 3 segundos. La luz roja y la microcorriente comienzan a actuar.</p>
+        </div>
+        <div class="ao__step">
+          <div class="ao__step-icon">🧘</div>
+          <div class="ao__step-n">Paso 4</div>
+          <h4>Relájate 10 min</h4>
+          <p>La sesión se detiene automáticamente. Puedes ver la tele, leer o descansar.</p>
+        </div>
+        <div class="ao__step">
+          <div class="ao__step-icon">📅</div>
+          <div class="ao__step-n">Paso 5</div>
+          <h4>Repite 3–5x/semana</h4>
+          <p>La constancia es clave. 3–5 sesiones semanales para resultados óptimos.</p>
+        </div>
+      </div>
+      <div class="ao__how-note">
+        <strong>Consejo pro:</strong> Usa las gafas justo antes de dormir — la piel se regenera durante el sueño y potencias el efecto de cada sesión.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ §8 ESPECIFICACIONES ════════════════════════════════════ -->
+  <section class="ao__specs">
+    <div class="wrap">
+      <div class="ao__specs-head">
+        <span class="eyebrow">Ficha técnica</span>
+        <h2 class="ttl">Especificaciones <em>técnicas.</em></h2>
+      </div>
+      <div class="ao__specs-layout">
+        <div class="ao__spec-cards">
+          <div class="ao__spec-card">
+            <div class="ao__spec-card-icon">🔴</div>
+            <div class="ao__spec-card-lbl">Tecnología</div>
+            <div class="ao__spec-card-val">LED 630–660 nm + EMS</div>
+          </div>
+          <div class="ao__spec-card">
+            <div class="ao__spec-card-icon">⏱️</div>
+            <div class="ao__spec-card-lbl">Sesión</div>
+            <div class="ao__spec-card-val">10 min · apagado automático</div>
+          </div>
+          <div class="ao__spec-card">
+            <div class="ao__spec-card-icon">🔋</div>
+            <div class="ao__spec-card-lbl">Batería</div>
+            <div class="ao__spec-card-val">7–10 sesiones · USB-C · 2h carga</div>
+          </div>
+          <div class="ao__spec-card">
+            <div class="ao__spec-card-icon">🏥</div>
+            <div class="ao__spec-card-lbl">Material</div>
+            <div class="ao__spec-card-val">ABS grado médico · piel sensible</div>
+          </div>
+          <div class="ao__spec-card">
+            <div class="ao__spec-card-icon">⚖️</div>
+            <div class="ao__spec-card-lbl">Peso</div>
+            <div class="ao__spec-card-val">400g aprox. · ultraligero</div>
+          </div>
+          <div class="ao__spec-card">
+            <div class="ao__spec-card-icon">🛡️</div>
+            <div class="ao__spec-card-lbl">Garantía</div>
+            <div class="ao__spec-card-val">1 año del fabricante</div>
+          </div>
+        </div>
+        <div class="ao__spec-table">
+          <div class="ao__spec-row"><span class="ao__spec-row-k">Tecnología</span><span class="ao__spec-row-v">Luz Roja LED (630–660 nm) + Microcorriente EMS</span></div>
+          <div class="ao__spec-row"><span class="ao__spec-row-k">Material</span><span class="ao__spec-row-v">ABS de grado médico</span></div>
+          <div class="ao__spec-row"><span class="ao__spec-row-k">Sesión</span><span class="ao__spec-row-v">10 minutos con apagado automático</span></div>
+          <div class="ao__spec-row"><span class="ao__spec-row-k">Carga</span><span class="ao__spec-row-v">USB-C incluido · ~2 horas carga completa</span></div>
+          <div class="ao__spec-row"><span class="ao__spec-row-k">Autonomía</span><span class="ao__spec-row-v">7–10 sesiones por carga</span></div>
+          <div class="ao__spec-row"><span class="ao__spec-row-k">Peso</span><span class="ao__spec-row-v">400g aprox. (ultraligero y portátil)</span></div>
+          <div class="ao__spec-row"><span class="ao__spec-row-k">Tipo de piel</span><span class="ao__spec-row-v">Todo tipo, incluida piel sensible</span></div>
+          <div class="ao__spec-row"><span class="ao__spec-row-k">Uso</span><span class="ao__spec-row-v">Doméstico — sin supervisión profesional</span></div>
+          <div class="ao__spec-row"><span class="ao__spec-row-k">Garantía</span><span class="ao__spec-row-v">1 año del fabricante</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ §9 COMPARATIVA ════════════════════════════════════════ -->
+  <section class="ao__compare">
+    <div class="wrap">
+      <div class="ao__compare-head">
+        <span class="eyebrow">¿Por qué AliviaX?</span>
+        <h2 class="ttl">AliviaX vs. <em>las alternativas.</em></h2>
+        <p class="sub">Compara y decide. No hay trampa — solo resultados.</p>
+      </div>
+      <div class="ao__compare-wrap">
+        <div class="ao__compare-table">
+          <div class="ao__cmp-header">
+            <span></span>
+            <span class="ao__cmp-hl">AliviaX</span>
+            <span>Corrector</span>
+            <span>Clínica</span>
+          </div>
+          <div class="ao__cmp-row">
+            <span class="ao__cmp-feat">Trata la causa raíz</span>
+            <span class="ao__cmp-cell y">✓</span>
+            <span class="ao__cmp-cell n">✗</span>
+            <span class="ao__cmp-cell y">✓</span>
+          </div>
+          <div class="ao__cmp-row">
+            <span class="ao__cmp-feat">Uso en casa</span>
+            <span class="ao__cmp-cell y">✓</span>
+            <span class="ao__cmp-cell y">✓</span>
+            <span class="ao__cmp-cell n">✗</span>
+          </div>
+          <div class="ao__cmp-row">
+            <span class="ao__cmp-feat">Sin agujas ni procedimientos</span>
+            <span class="ao__cmp-cell y">✓</span>
+            <span class="ao__cmp-cell y">✓</span>
+            <span class="ao__cmp-cell n">✗</span>
+          </div>
+          <div class="ao__cmp-row">
+            <span class="ao__cmp-feat">Resultados duraderos</span>
+            <span class="ao__cmp-cell y">✓</span>
+            <span class="ao__cmp-cell n">✗</span>
+            <span class="ao__cmp-cell y">✓</span>
+          </div>
+          <div class="ao__cmp-row">
+            <span class="ao__cmp-feat">Precio accesible</span>
+            <span class="ao__cmp-cell y">✓</span>
+            <span class="ao__cmp-cell y">✓</span>
+            <span class="ao__cmp-cell n">✗</span>
+          </div>
+          <div class="ao__cmp-row">
+            <span class="ao__cmp-feat">Solo 10 min al día</span>
+            <span class="ao__cmp-cell y">✓</span>
+            <span class="ao__cmp-cell y">✓</span>
+            <span class="ao__cmp-cell n">✗</span>
+          </div>
+          <div class="ao__cmp-row">
+            <span class="ao__cmp-feat">Precio aproximado</span>
+            <span class="ao__cmp-cell t ao-val">{{ price }}</span>
+            <span class="ao__cmp-cell t">~30€/mes</span>
+            <span class="ao__cmp-cell t">+300€/sesión</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ §10 FAQ ════════════════════════════════════════════════ -->
+  <section class="ao__faq">
+    <div class="wrap-s">
+      <div class="ao__faq-head">
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2 class="ttl">Todo lo que <em>necesitas saber.</em></h2>
+      </div>
+      <div class="ao__faq-list">
+
+        {%- assign faqs = "¿Cuándo veré resultados?|La mayoría de usuarias notan la piel más firme y descansada en las primeras 2 semanas. Los cambios visibles en ojeras y bolsas aparecen a partir de la semana 3–4 con uso constante de 3–5 sesiones semanales.||¿Es seguro para los ojos?|Sí, completamente. La luz roja LED de 630–660 nm es no ionizante y está diseñada para la delicada zona periocular. No emite calor ni radiación dañina. Apta para uso diario.||No siento la microcorriente, ¿está funcionando?|Sí. La microcorriente EMS es imperceptible en muchas personas — trabaja a nivel muscular profundo. Se conduce mejor con la piel hidratada, por eso recomendamos aplicar sérum antes de cada sesión.||¿Puedo usarlas si tengo piel sensible?|Sí. Tanto la luz roja como la microcorriente son tecnologías no invasivas. Si tienes alguna condición dermatológica activa, consulta con tu dermatólogo antes del primer uso.||¿Cuántas veces a la semana debo usarlas?|Recomendamos 3–5 sesiones por semana de 10 minutos. Puedes usarlas diariamente — no hay riesgo de sobreuso. Lo importante es la constancia.||¿Funcionan para arrugas profundas?|Las gafas están diseñadas para prevenir y reducir líneas finas y arrugas tempranas. Para arrugas profundas, ayudan a suavizar su apariencia de forma más gradual.||¿Puedo usarlas si llevo lentillas?|Retira las lentillas antes de cada sesión. La microcorriente puede generar una ligera sensación incómoda con lentillas puestas.||¿Cómo las limpio?|Pasa un paño suave ligeramente húmedo sobre las zonas de contacto tras cada uso. No las sumerjas en agua ni uses alcohol.||¿Cuánto dura la batería?|Con carga completa, la batería ofrece aproximadamente 7–10 sesiones de 10 minutos. El tiempo de carga completa es de ~2 horas.||¿Puedo usarlas durante el embarazo?|Recomendamos consultar con tu médico antes de usar cualquier dispositivo de microcorriente durante el embarazo." | split: "||" -%}
+
+        {%- for faq_raw in faqs -%}
+          {%- assign fq = faq_raw | strip | split: "|" -%}
+          {%- if fq[0] != blank -%}
+            <div class="ao__faq-item{% if forloop.first %} open{% endif %}">
+              <div class="ao__faq-q">
+                <h3>{{ fq[0] | strip }}</h3>
+                <span class="ao__faq-arrow">▼</span>
+              </div>
+              <div class="ao__faq-a"><p>{{ fq[1] | strip }}</p></div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+      </div>
+      <div class="ao__faq-cta">
+        <p>¿Tienes más preguntas? Estamos aquí para ayudarte.</p>
+        <a class="btn btn-dark" href="/pages/contacto">CONTACTAR CON NOSOTRAS</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ §11 CTA FINAL ══════════════════════════════════════════ -->
+  <section class="ao__final">
+    <div class="wrap">
+      <div class="ao__final-grid">
+        <div>
+          <span class="eyebrow">✦ Oferta activa ahora</span>
+          <h2 class="ttl">Tu mirada merece<br><em>lo mejor.</em></h2>
+          <p class="sub">Consigue las Gafas AliviaX con un {{ badge }} de descuento y empieza a ver resultados reales en 1–2 semanas.</p>
+          <div class="ao__final-tags">
+            <span class="ao__final-tag">📦 Stock limitado</span>
+            <span class="ao__final-tag">🔥 Alta demanda</span>
+            <span class="ao__final-tag">🚚 Envío gratis hoy</span>
+          </div>
+          <div class="ao__final-actions">
+            <a class="btn btn-rose" href="{{ product_url }}">
+              QUIERO MIS GAFAS — {{ price }}
+            </a>
+            <a class="btn btn-outline-w" href="{{ product_url }}">Ver producto</a>
+          </div>
+        </div>
+        <div class="ao__final-side">
+          <div class="ao__timer-lbl">La oferta termina en</div>
+          <div class="ao__timer" id="ao-timer">
+            <div class="ao__tbox"><strong data-ao-d>00</strong><span>Días</span></div>
+            <div class="ao__tbox"><strong data-ao-h>00</strong><span>Horas</span></div>
+            <div class="ao__tbox"><strong data-ao-m>00</strong><span>Min</span></div>
+          </div>
+          <div class="ao__grnts">
+            <div class="ao__grnt">
+              <div class="ao__grnt-icon">🛡️</div>
+              <div class="ao__grnt-text">
+                <h4>30 días sin riesgo</h4>
+                <p>Si no te convence, te devolvemos el dinero. Sin preguntas.</p>
+              </div>
+            </div>
+            <div class="ao__grnt">
+              <div class="ao__grnt-icon">🚚</div>
+              <div class="ao__grnt-text">
+                <h4>Envío gratis</h4>
+                <p>Entrega en 3–5 días hábiles en España peninsular.</p>
+              </div>
+            </div>
+            <div class="ao__grnt">
+              <div class="ao__grnt-icon">🏆</div>
+              <div class="ao__grnt-text">
+                <h4>Garantía 1 año</h4>
+                <p>ABS de grado médico con garantía completa de 12 meses.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ══ STICKY CTA MÓVIL ══════════════════════════════════════════ -->
+<div class="ao ao__sticky" id="ao-sticky" aria-hidden="true">
+  <div class="ao__sticky-inner">
+    <div class="ao__sticky-price">
+      <div class="s-old">{{ old_price }}</div>
+      <div class="s-cur">{{ price }}</div>
+    </div>
+    <a class="btn btn-rose" href="{{ product_url }}">COMPRAR AHORA →</a>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* sticky */
+  var sticky = document.getElementById('ao-sticky');
+  var heroBtn = document.querySelector('.ao__hero-actions');
+  if (sticky && heroBtn) {
+    window.addEventListener('scroll', function () {
+      var show = heroBtn.getBoundingClientRect().bottom < 0;
+      sticky.style.transform = show ? 'translateY(0)' : 'translateY(100%)';
+      sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
+    }, { passive: true });
+  }
+
+  /* scroll suave */
+  var scrollBtn = document.querySelector('[data-scrollto]');
+  if (scrollBtn) {
+    scrollBtn.addEventListener('click', function () {
+      var target = document.querySelector(scrollBtn.getAttribute('data-scrollto'));
+      if (!target) return;
+      var y = target.getBoundingClientRect().top + window.pageYOffset - 20;
+      if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) { window.scrollTo(0, y); return; }
+      var s = window.pageYOffset, d = y - s, dur = 900, t0 = performance.now();
+      function step(t) {
+        var p = Math.min((t - t0) / dur, 1);
+        var e = p < .5 ? 4*p*p*p : 1 - Math.pow(-2*p+2,3)/2;
+        window.scrollTo(0, s + d * e);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  /* FAQ */
+  document.querySelectorAll('.ao__faq-item').forEach(function (item) {
+    item.querySelector('.ao__faq-q').addEventListener('click', function () {
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.ao__faq-item').forEach(function (f) { f.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  /* countdown */
+  var timer = document.getElementById('ao-timer');
+  if (timer) {
+    var dEl = timer.querySelector('[data-ao-d]');
+    var hEl = timer.querySelector('[data-ao-h]');
+    var mEl = timer.querySelector('[data-ao-m]');
+    var deadline = new Date(Date.now() + 47 * 3600000);
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      var diff = deadline - Date.now();
+      if (diff <= 0) { dEl.textContent = hEl.textContent = mEl.textContent = '00'; return; }
+      dEl.textContent = pad(Math.floor(diff / 86400000));
+      hEl.textContent = pad(Math.floor(diff / 3600000 % 24));
+      mEl.textContent = pad(Math.floor(diff / 60000 % 60));
+    }
+    tick(); setInterval(tick, 1000);
+  }
+}());
+</script>
+
+{% schema %}
+{
+  "name": "AliviaX Anti-Ojeras",
+  "tag": "div",
+  "class": "ao-landing-wrapper",
+  "settings": [
+    { "type": "header", "content": "Imagen del producto" },
+    { "type": "image_picker", "id": "product_image", "label": "Imagen principal" },
+    { "type": "header", "content": "Precios y enlace" },
+    { "type": "url",  "id": "product_url",  "label": "Enlace al producto" },
+    { "type": "text", "id": "price",      "label": "Precio actual",           "default": "49,99€" },
+    { "type": "text", "id": "old_price",  "label": "Precio original (tachado)","default": "79,99€" },
+    { "type": "text", "id": "badge_text", "label": "Texto del badge descuento","default": "-37%" }
+  ],
+  "presets": [{ "name": "AliviaX Anti-Ojeras" }]
+}
+{% endschema %}
